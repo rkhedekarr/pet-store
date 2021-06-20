@@ -1,6 +1,14 @@
 # SwaggerPetStore
 SwaggerPetStore API Automation project
 
+## Technical stack used.
+  1. Environment and specs: https://petstore.swagger.io/
+  2. Required scripting language: Java 
+  3. JDK: JDK 11
+  4. Maven: 3.6.1
+  5. Required testing tool: Rest-assured, Cucumber-BDD framework with Junit
+  6. CI platform: git, jenkins
+
 ## How to run the tests locally
 The tests can be run locally using below command in terminal
 ```java
