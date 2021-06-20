@@ -1,11 +1,6 @@
 @store @api
 Feature: Verify STORE endpoint
 
-#  1. Environment and specs: https://petstore.swagger.io/
-#  2. Required scripting language: Java
-#  3. Required testing tool: Rest-assured
-#  4. CI platform: git, jenkins
-
   Background:
     Given I reset API parameters
     And I use "https://petstore.swagger.io/v2" as base URI

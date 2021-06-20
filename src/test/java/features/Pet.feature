@@ -1,11 +1,6 @@
 @pet @api
 Feature: Verify PET endpoint
 
-#  1. Environment and specs: https://petstore.swagger.io/
-#  2. Required scripting language: Java
-#  3. Required testing tool: Rest-assured
-#  4. CI platform: git, jenkins
-
   Background:
     Given I use "https://petstore.swagger.io/v2" as base URI
 
@@ -64,3 +59,15 @@ Feature: Verify PET endpoint
     Examples:
       | PET-NAME | PET-NEW-NAME |
       | CAT      | TIGER        |
+      
+      
+  @pet5
+  Scenario Outline: Verify add pet image functionality
+    Given I make REST service headers with the below fields
+      | Content-Type        | Accept           |
+      | multipart/form-data | application/json |
+    Then I make POST call to "/pet/<PET-ID>/uploadImage" to upload pet image "cat.jpg"
+    Then I get response code "200"
+    Examples:
+      | PET-ID |
+      | 123    |

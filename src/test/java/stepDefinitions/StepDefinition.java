@@ -8,6 +8,8 @@ import io.cucumber.datatable.DataTable;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -205,5 +207,13 @@ public class StepDefinition {
                     response.body().path(entry.getKey()));
             }
         }
+    }
+    
+    @Then("I make POST call to {string} to upload pet image {string}")
+    public void iMakePOSTCallToToUploadPetImage(String path, String imageName) {
+    	RestAssured.basePath = path;
+    	requestSpecification = RestAssured.given().headers(customHeaders)
+    		.multiPart("file", new File("src/test/resources/testdata/" + imageName));
+    	response = requestSpecification.body(msgBody.toJSONString()).post();
     }
 }
