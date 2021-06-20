@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    environment{
+        API_KEY = YzgzZmVhZGFhZmM3MTcyMzllYmIwYjgyYWIyMzBlZDkyN2FkNzliNGQ1NmQ4NGNhMzQ1MjBlMDgwMzVlZjcyYjkw
+        PROFILE_ID = 3505
+    }
+    tools {
+        maven 'maven-3.6.1'
+        jdk 'openJDK_11'
+    }
+    stages {
+        stage('Git pull'){
+            steps{
+				script{
+						git branch: 'main', credentialsId: '<ADD-CREDENTIALS-HERE>', url: 'git@github.com:rkhedekarr/SwaggerPetStore.git'
+					}
+				}
+        }
+        stage ('ExecuteTests') {
+            steps {
+				sh 'mvn clean test -Dcucumber.options="--tags @api"'
+                }
+        }
+		stage('upload') {
+            steps {
+                sh 'curl -X POST ' +
+                   '-H "x-api-key:${API_KEY}" ' +
+                   '-H "multipart/form-data" '+
+                   '-F "file[]=@target/Cucumber.json" ' +
+                   '"https://app.calliope.pro/api/v2/profile/${PROFILE_ID}/import?os=myos&platform=myplatform&build=mybuild"'
+            }
+        }
+    }
+}
