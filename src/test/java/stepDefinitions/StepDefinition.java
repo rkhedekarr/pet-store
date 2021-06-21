@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -25,7 +27,7 @@ public class StepDefinition {
     public static Response response;
     public static Response responseText;
     public static RequestSpecification requestSpecification;
-    public static JSONObject msgBody = new JSONObject();
+    public static JSONObject msgBody = new JSONObject();   
     public static Map<String, String> customHeaders = new HashMap();
     public static String id;
     public static String userName;
@@ -72,8 +74,8 @@ public class StepDefinition {
                 }
                 break;
             case "POST":
-                response = requestSpecification.body(msgBody.toJSONString()).post();
-                break;               
+            	response = requestSpecification.body(msgBody.toJSONString()).post();
+            	 break;               
             case "DELETE":
             	Thread.sleep(2000);
                 if (path.contains("pet") || path.contains("store")) {
@@ -83,7 +85,7 @@ public class StepDefinition {
                 }
                 break;
             case "PUT":
-                response = requestSpecification.body(msgBody.toJSONString()).put();
+            	response = requestSpecification.body(msgBody.toJSONString()).put();              
                 break;
             default:
                 Assert.fail("Ooops!! Method [" + method + "] is not implemented.");
@@ -138,10 +140,12 @@ public class StepDefinition {
     public void iReadRequestBodyFrom(String fileName) throws IOException, ParseException 
     {
         msgBody.clear();
-        JSONParser parser = new JSONParser();
-        Object obj =
-            parser.parse(new FileReader("src/test/resources/testdata/" + fileName + ".json"));
+
+    	JSONParser parser = new JSONParser();
+    	Object obj = parser.parse(new FileReader("src/test/resources/testdata/" + fileName + ".json"));
         msgBody = (JSONObject) obj;
+      
+            
     }
 
     @Given("I make REST service headers with the below fields")
@@ -187,7 +191,8 @@ public class StepDefinition {
         }
     }
 
-    @Given("I reset API parameters") public void iResetAPIParameters() {
+    @Given("I reset API parameters") 
+    public void iResetAPIParameters() {
         response = null;
         responseText = null;
         requestSpecification = null;
