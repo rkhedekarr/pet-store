@@ -12,7 +12,7 @@ pipeline {
         stage('Git pull'){
             steps{
 				script{
-						git branch: 'main', credentialsId: '<ADD-CREDENTIALS-HERE>', url: 'git@github.com:rkhedekarr/SwaggerPetStore.git'
+						git branch: 'main', credentialsId: '<ADD-CREDENTIALS-HERE>', url: 'git@github.com:rkhedekarr/pet-store.git'
 					}
 				}
         }
