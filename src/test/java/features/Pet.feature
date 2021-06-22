@@ -71,3 +71,14 @@ Feature: Verify PET endpoint
     Examples:
       | PET-ID |
       | 123    |
+      
+  @pet6
+  Scenario Outline: Verify add pet image functionality with invalid header
+    Given I make REST service headers with the below fields
+      | Content-Type        | Accept           |
+      | multipart/form-data231 | application/json |
+    Then I make POST call to "/pet/<PET-ID>/uploadImage" to upload pet image "cat.jpg"
+    Then I get response code "415"
+    Examples:
+      | PET-ID |
+      | 12332  |

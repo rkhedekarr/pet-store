@@ -221,4 +221,11 @@ public class StepDefinition {
     		.multiPart("file", new File("src/test/resources/testdata/" + imageName));
     	response = requestSpecification.body(msgBody.toJSONString()).post();
     }
+    
+//    @Then("I make POST call to {string} without image")
+//    public void iMakePOSTCallToToUploadPetImageWitImg(String path) {
+//    	RestAssured.basePath = path;
+//    	requestSpecification = RestAssured.given().headers(customHeaders);    		
+//    	response = requestSpecification.body(msgBody.toJSONString()).post();
+//    }
 }

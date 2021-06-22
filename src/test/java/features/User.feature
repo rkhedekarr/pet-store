@@ -66,3 +66,20 @@ Feature: Verify USER endpoint
     Examples:
 	  | USER-NAME 	   | PASSWORD  |
       | rkhedekarrRah  | pass123   |   
+      
+      
+  @user4
+  Scenario Outline: Verify user is not created with invalid ID using API calls
+    Given I make REST service headers with the below fields
+      | Content-Type     | Accept           |
+      | application/json | application/json |
+    Given I read request body from "addNewUserRequest"
+    And I update request with below values
+      | id   | 
+      | <ID> |
+    When I make "POST" call to "/user"
+    Then I get response code "500"
+    Examples:
+    | <ID> |
+    | test1234 |
+      
