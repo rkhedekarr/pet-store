@@ -61,15 +61,18 @@ public class StepDefinition {
         requestSpecification = RestAssured.given().headers(customHeaders).queryParams(queryParams);
         switch (method.toUpperCase().trim()) {
             case "GET":
-                if (path.contains("user")) {
+                if (path.contains("user")) 
+                {
                     for (int i = 0; i < 10; i++) {
                         Thread.sleep(2000);
                         response = requestSpecification.given().when().get();
                         if (response.statusCode() == 200) {
                             break;
                         }
-                    }
-                } else {
+                    }                   
+                } 
+                else
+                {
                     response = requestSpecification.given().when().get();
                 }
                 break;
@@ -77,7 +80,7 @@ public class StepDefinition {
             	response = requestSpecification.body(msgBody.toJSONString()).post();
             	 break;               
             case "DELETE":
-            	Thread.sleep(2000);
+            	Thread.sleep(5000);
                 if (path.contains("pet") || path.contains("store")) {
                     response = requestSpecification.given().when().delete("/" + id);
                 } else {
@@ -122,8 +125,7 @@ public class StepDefinition {
     {
     	List<String> myResponse = response.jsonPath().getList("$");
         Assert.assertTrue(myResponse.size() + " pet details found as expected",
-            myResponse.size() == Integer.parseInt(count));
-        //System.out.println(responseText);
+            myResponse.size() == Integer.parseInt(count));        
         
         
     }
@@ -220,12 +222,5 @@ public class StepDefinition {
     	requestSpecification = RestAssured.given().headers(customHeaders)
     		.multiPart("file", new File("src/test/resources/testdata/" + imageName));
     	response = requestSpecification.body(msgBody.toJSONString()).post();
-    }
-    
-//    @Then("I make POST call to {string} without image")
-//    public void iMakePOSTCallToToUploadPetImageWitImg(String path) {
-//    	RestAssured.basePath = path;
-//    	requestSpecification = RestAssured.given().headers(customHeaders);    		
-//    	response = requestSpecification.body(msgBody.toJSONString()).post();
-//    }
+    }    
 }

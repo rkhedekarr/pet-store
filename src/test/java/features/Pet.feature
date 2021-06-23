@@ -15,6 +15,8 @@ Feature: Verify PET endpoint
       | pending   |
       | sold      |
 
+#BUG : SOMETIMES, DELETING THE DELETED PET DETAILS, RETURNS 200 INSTEAD OF 404. 
+#SERVER TAKING LONG TO UPDATE THE RECORDS
   @pet2
   Scenario: Verify add new pet and delete added pet functionality of PET API
     Given I make REST service headers with the below fields
@@ -29,11 +31,13 @@ Feature: Verify PET endpoint
     And I make "DELETE" call to "/pet"
     And I get response code "404"
 
+#Bug : Even with invalid status it returns 202 response
   @pet3
   Scenario: Verify findByStatus functionality of PET API with incorrect status
     When I make "GET" call to "/pet/findByStatus?status=Bought"
-    Then I get response code "200"
-    And I verify "0" pet details is available in the response
+    Then I verify "0" pet details is available in the response
+    And I get response code "404"
+    
 
   @pet4
   Scenario Outline: Verify add and modify pet functionality of PET API
@@ -82,3 +86,15 @@ Feature: Verify PET endpoint
     Examples:
       | PET-ID |
       | 12332  |
+      
+  @pet7 
+  Scenario Outline: Verify findPetByID functionality of PET API with Invalid ID
+    Given I make REST service headers with the below fields
+     | Accept           |
+     | application/json |
+    When I make "GET" call to "/pet/<PET-ID>"
+    Then I get response code "404"    
+    Examples:
+    | PET-ID |
+  	| 922312759aa80634188  |
+    

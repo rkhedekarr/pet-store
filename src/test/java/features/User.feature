@@ -4,6 +4,10 @@ Feature: Verify USER endpoint
   Background:
     Given I use "https://petstore.swagger.io/v2" as base URI
 
+
+#BUG : SOMETIMES, DELETING THE DELETED USER DETAILS, RETURNS 200 INSTEAD OF 404. 
+#AND SOMEETIMES DELETING THE USER FOR FIRST TIME ITSELF DOESNT WORK AND RETURNS 404 INSTEAD OF 200
+#SERVER TAKING LONG TO UPDATE THE RECORDS
   @user1
   Scenario Outline: Verify user is created, verified and then deleted using API calls
     Given I make REST service headers with the below fields
